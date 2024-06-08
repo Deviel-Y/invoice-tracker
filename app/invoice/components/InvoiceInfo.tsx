@@ -6,7 +6,7 @@ import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import CalloutAlert from "./Callout";
 
-const invoiceInfo = () => {
+const InvoiceInfo = () => {
   const {
     register,
     handleSubmit,
@@ -67,4 +67,4 @@ const invoiceInfo = () => {
   );
 };
 
-export default invoiceInfo;
+export default InvoiceInfo;
