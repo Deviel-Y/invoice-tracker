@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 export type InvoiceType = z.infer<typeof createInvoiceSchema>;
+export type ProductType = z.infer<typeof productSchema>;
 
-const product = z.object({
+const productSchema = z.object({
   name: z.string().min(1),
 });
 
@@ -16,5 +17,5 @@ export const createInvoiceSchema = z.object({
     .min(1, "Company name is required")
     .max(255, "Maximum character reached"),
   totalPrice: z.number().min(1),
-  products: z.array(product),
+  products: z.array(productSchema),
 });
