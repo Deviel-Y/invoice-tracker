@@ -1,9 +1,10 @@
 import InvoiceInfo from "../components/InvoiceInfo";
+import ProductForm from "../components/ProductForm";
 
 const CreateNewInvoicePage = () => {
   return (
     <div>
-      <InvoiceInfo />
+      <ProductForm />
     </div>
   );
 };
