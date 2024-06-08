@@ -1,13 +1,13 @@
 "use client";
 
 import { create } from "zustand";
-import { ProductType } from "./validationSchemas";
+import { ProductStoreType, ProductType } from "./validationSchemas";
 
 interface ProductStore {
-  products: ProductType[];
+  products: ProductStoreType[];
   totalPrice: number;
 
-  addProduct: (product: ProductType) => void;
+  addProduct: (product: ProductStoreType) => void;
   setTotalPrice: (price: number) => void;
 }
 

@@ -5,6 +5,7 @@ CREATE TABLE `Product` (
     `quantity` INTEGER NOT NULL,
     `pricePerEach` INTEGER NOT NULL,
     `unit` ENUM('meter', 'branch', 'piece') NOT NULL,
+    `productTotalPrice` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -15,7 +16,7 @@ CREATE TABLE `Invoice` (
     `invoiceNumber` INTEGER NOT NULL,
     `invoiceDescription` TEXT NOT NULL,
     `companyName` VARCHAR(191) NOT NULL,
-    `totalPrice` INTEGER NOT NULL,
+    `invoiceTotalPrice` INTEGER NOT NULL,
 
     UNIQUE INDEX `Invoice_invoiceNumber_key`(`invoiceNumber`),
     PRIMARY KEY (`id`)

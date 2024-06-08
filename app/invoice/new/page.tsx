@@ -1,11 +1,13 @@
-import InvoiceInfo from "../components/InvoiceInfo";
+import { Grid } from "@radix-ui/themes";
 import ProductForm from "../components/ProductForm";
+import ProductListTable from "../components/ProductListTable";
 
 const CreateNewInvoicePage = () => {
   return (
-    <div>
+    <Grid columns="3" gap="5">
       <ProductForm />
-    </div>
+      <ProductListTable />
+    </Grid>
   );
 };
 

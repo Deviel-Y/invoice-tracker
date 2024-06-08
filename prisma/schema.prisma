@@ -14,12 +14,13 @@ datasource db {
 }
 
 model Product {
-  id           Int       @id @default(autoincrement())
-  productName  String
-  quantity     Int
-  pricePerEach Int
-  unit         Unit
-  invoices     Invoice[]
+  id                Int       @id @default(autoincrement())
+  productName       String
+  quantity          Int
+  pricePerEach      Int
+  unit              Unit
+  productTotalPrice Int
+  invoices          Invoice[]
 }
 
 enum Unit {
@@ -33,6 +34,6 @@ model Invoice {
   invoiceNumber      Int       @unique
   invoiceDescription String    @db.Text
   companyName        String
-  totalPrice         Int
+  invoiceTotalPrice  Int
   products           Product[]
 }

@@ -8,7 +8,7 @@ export const POST = async (request: NextRequest) => {
     companyName,
     invoiceDescription,
     invoiceNumber,
-    totalPrice,
+    invoiceTotalPrice,
     products,
   } = body;
 
@@ -32,7 +32,7 @@ export const POST = async (request: NextRequest) => {
       companyName,
       invoiceDescription,
       invoiceNumber,
-      totalPrice,
+      invoiceTotalPrice,
       products: {
         create: [...products],
       },

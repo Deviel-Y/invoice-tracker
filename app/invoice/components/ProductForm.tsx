@@ -1,27 +1,37 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
-import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
 import useProductStore from "@/app/store";
-import { productSchema, ProductType } from "@/app/validationSchemas";
+import { addProductSchema, ProductType } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
 import CalloutAlert from "./Callout";
-import { error } from "console";
 
 const ProductForm = () => {
   const addProduct = useProductStore((s) => s.addProduct);
+  const products = useProductStore((s) => s.products);
+  const setTotalPrice = useProductStore((s) => s.setTotalPrice);
+
+  const totalPriceSum = products.reduce(
+    (acc, sum) => acc + sum.productTotalPrice,
+    0
+  );
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProductType>({ resolver: zodResolver(productSchema) });
+  } = useForm<ProductType>({ resolver: zodResolver(addProductSchema) });
 
   return (
     <form
+      className="col-span-1"
       onSubmit={handleSubmit((data) => {
-        addProduct(data);
+        addProduct({
+          ...data,
+          productTotalPrice: data.quantity * data.pricePerEach,
+        });
+        setTotalPrice(totalPriceSum);
       })}
     >
       <Card>

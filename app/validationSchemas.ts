@@ -1,9 +1,11 @@
 import { z } from "zod";
 
 export type InvoiceType = z.infer<typeof createInvoiceSchema>;
-export type ProductType = z.infer<typeof productSchema>;
+export type ProductType = z.infer<typeof addProductSchema>; //for ProductForm
+export type ProductStoreType = z.infer<typeof ProductStoreSchema>; //for zustand store
 
-export const productSchema = z.object({
+//This is for ProductForm
+export const addProductSchema = z.object({
   productName: z
     .string()
     .min(1, "Product name is required")
@@ -25,6 +27,19 @@ export const productSchema = z.object({
     .min(1, "Invoice number is required"),
 });
 
+//And this is for zustand store
+export const ProductStoreSchema = z.object({
+  productName: z.string(),
+
+  quantity: z.number(),
+
+  unit: z.enum(["meter", "branch", "piece"]),
+
+  pricePerEach: z.number(),
+
+  productTotalPrice: z.number(),
+});
+
 export const createInvoiceSchema = z.object({
   invoiceNumber: z
     .number({ message: "Invoice number is required" })
@@ -37,7 +52,7 @@ export const createInvoiceSchema = z.object({
     .min(1, "Company name is required")
     .max(255, "Maximum character reached"),
 
-  totalPrice: z.number().min(1),
+  invoiceTotalPrice: z.number().min(1),
 
-  products: z.array(productSchema),
+  products: z.array(ProductStoreSchema),
 });
