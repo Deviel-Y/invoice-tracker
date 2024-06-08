@@ -1,30 +1,46 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+
 import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
+import useProductStore from "@/app/store";
+import { ProductType } from "@/app/validationSchemas";
 
 const ProductForm = () => {
+  const addProduct = useProductStore((s) => s.addProduct);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProductType>();
+
   return (
-    <form>
+    <form
+      onSubmit={handleSubmit((data) => {
+        addProduct(data);
+      })}
+    >
       <Card>
         <Flex direction="column" gap="5">
           <Box>
             <Text as="label">Product Name</Text>
-            <TextField.Root size="3" />
+            <TextField.Root {...register("productName")} size="3" />
           </Box>
 
           <Box>
             <Text as="label">Quantity</Text>
-            <TextField.Root size="3" />
+            <TextField.Root {...register("quantity")} size="3" />
           </Box>
 
           <Box>
             <Text as="label">Unit</Text>
-            <TextField.Root size="3" />
+            <TextField.Root {...register("unit")} size="3" />
           </Box>
 
           <Box>
             <Text as="label">Price Per Each</Text>
-            <TextField.Root size="3" />
+            <TextField.Root {...register("pricePerEach")} size="3" />
           </Box>
 
           <Flex gap="3">
