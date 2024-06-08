@@ -9,13 +9,6 @@ import CalloutAlert from "./Callout";
 
 const ProductForm = () => {
   const addProduct = useProductStore((s) => s.addProduct);
-  const products = useProductStore((s) => s.products);
-  const setTotalPrice = useProductStore((s) => s.setTotalPrice);
-
-  const totalPriceSum = products.reduce(
-    (acc, sum) => acc + sum.productTotalPrice,
-    0
-  );
 
   const {
     register,
@@ -31,7 +24,6 @@ const ProductForm = () => {
           ...data,
           productTotalPrice: data.quantity * data.pricePerEach,
         });
-        setTotalPrice(totalPriceSum);
       })}
     >
       <Card>

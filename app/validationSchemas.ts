@@ -1,8 +1,9 @@
 import { z } from "zod";
 
-export type InvoiceType = z.infer<typeof createInvoiceSchema>;
+export type InvoiceInfoType = z.infer<typeof invoiceInfoSchema>; //This is for InvoiceInfo form
 export type ProductType = z.infer<typeof addProductSchema>; //for ProductForm
 export type ProductStoreType = z.infer<typeof ProductStoreSchema>; //for zustand store
+export type InvoiceType = z.infer<typeof invoiceSchema>; //for zustand store
 
 //This is for ProductForm
 export const addProductSchema = z.object({
@@ -40,7 +41,22 @@ export const ProductStoreSchema = z.object({
   productTotalPrice: z.number(),
 });
 
-export const createInvoiceSchema = z.object({
+//This is for InvoiceInfo form
+export const invoiceInfoSchema = z.object({
+  invoiceNumber: z
+    .number({ message: "Invoice number is required" })
+    .min(1, "Invoice number is required"),
+
+  invoiceDescription: z.string().min(1, "Invoice description is required"),
+
+  companyName: z
+    .string()
+    .min(1, "Company name is required")
+    .max(255, "Maximum character reached"),
+});
+
+//This is for server-side validation
+export const invoiceSchema = z.object({
   invoiceNumber: z
     .number({ message: "Invoice number is required" })
     .min(1, "Invoice number is required"),
@@ -53,6 +69,5 @@ export const createInvoiceSchema = z.object({
     .max(255, "Maximum character reached"),
 
   invoiceTotalPrice: z.number().min(1),
-
   products: z.array(ProductStoreSchema),
 });

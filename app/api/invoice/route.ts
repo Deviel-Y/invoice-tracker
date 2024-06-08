@@ -1,4 +1,4 @@
-import { createInvoiceSchema, InvoiceType } from "@/app/validationSchemas";
+import { invoiceInfoSchema, InvoiceType } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +12,7 @@ export const POST = async (request: NextRequest) => {
     products,
   } = body;
 
-  const validation = createInvoiceSchema.safeParse(body);
+  const validation = invoiceInfoSchema.safeParse(body);
 
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });

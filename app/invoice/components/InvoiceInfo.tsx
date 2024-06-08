@@ -1,22 +1,33 @@
 "use client";
 
-import { createInvoiceSchema, InvoiceType } from "@/app/validationSchemas";
-import { zodResolver } from "@hookform/resolvers/zod";
+import useProductStore from "@/app/store";
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import CalloutAlert from "./Callout";
+import { invoiceInfoSchema, InvoiceInfoType } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const InvoiceInfo = () => {
+  const products = useProductStore((s) => s.products);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<InvoiceType>({
-    resolver: zodResolver(createInvoiceSchema),
-  });
+  } = useForm<InvoiceInfoType>({ resolver: zodResolver(invoiceInfoSchema) });
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form
+      onSubmit={handleSubmit((data) =>
+        console.log({
+          ...data,
+          invoiceTotalPrice: products.reduce(
+            (acc, sum) => acc + sum.productTotalPrice,
+            0
+          ),
+          products,
+        })
+      )}
+    >
       <Flex direction="column" gap="5">
         <Flex gap="5">
           <Box>
