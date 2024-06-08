@@ -8,8 +8,8 @@ export const POST = async (request: NextRequest) => {
     companyName,
     invoiceDescription,
     invoiceNumber,
-    products,
     totalPrice,
+    products,
   } = body;
 
   const validation = createInvoiceSchema.safeParse(body);

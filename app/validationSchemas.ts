@@ -4,7 +4,10 @@ export type InvoiceType = z.infer<typeof createInvoiceSchema>;
 export type ProductType = z.infer<typeof productSchema>;
 
 const productSchema = z.object({
-  name: z.string().min(1),
+  productName: z.string().min(1),
+  quantity: z.number().min(1),
+  unit: z.enum(["meter", "branch", "piece"]),
+  pricePerEach: z.number().min(1),
 });
 
 export const createInvoiceSchema = z.object({
