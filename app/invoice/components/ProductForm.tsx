@@ -6,9 +6,11 @@ import { addProductSchema, ProductType } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
 import CalloutAlert from "./Callout";
+import toast from "react-hot-toast";
 
 const ProductForm = () => {
   const addProduct = useProductStore((s) => s.addProduct);
+  const products = useProductStore((s) => s.products);
 
   const {
     register,
@@ -20,10 +22,16 @@ const ProductForm = () => {
     <form
       className="col-span-1"
       onSubmit={handleSubmit((data) => {
-        addProduct({
-          ...data,
-          productTotalPrice: data.quantity * data.pricePerEach,
-        });
+        const existedProduct = products.find(
+          (product) => product.productName === data.productName
+        );
+        if (existedProduct) {
+          toast.error("You cannot add product that is already exist");
+        } else
+          addProduct({
+            ...data,
+            productTotalPrice: data.quantity * data.pricePerEach,
+          });
       })}
     >
       <Card>
