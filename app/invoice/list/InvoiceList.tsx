@@ -1,3 +1,4 @@
+import formatNumber from "@/app/formatNumber";
 import prisma from "@/prisma/client";
 import { Invoice } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
@@ -31,7 +32,9 @@ const InvoiceList = async () => {
           <Table.Row key={invoice.id}>
             <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
             <Table.Cell>{invoice.companyName}</Table.Cell>
-            <Table.Cell>{invoice.invoiceTotalPrice}</Table.Cell>
+            <Table.Cell>{`${formatNumber(
+              invoice.invoiceTotalPrice
+            )} T`}</Table.Cell>
             <Table.Cell>{invoice.createdAt.toDateString()}</Table.Cell>
             <Table.Cell>{invoice.updatedAt.toDateString()}</Table.Cell>
           </Table.Row>

@@ -1,5 +1,6 @@
 "use client";
 
+import formatNumber from "@/app/formatNumber";
 import useProductStore from "@/app/store";
 import { Product } from "@prisma/client";
 import { Button, Table } from "@radix-ui/themes";
@@ -43,11 +44,13 @@ const ProductListTable = () => {
             {products.map((product, index) => (
               <Table.Row key={index}>
                 <Table.Cell>{product.productName}</Table.Cell>
-                <Table.Cell>{product.quantity}</Table.Cell>
+                <Table.Cell>{formatNumber(product.quantity)}</Table.Cell>
                 <Table.Cell>{product.unit}</Table.Cell>
-                <Table.Cell>{product.pricePerEach}</Table.Cell>
+                <Table.Cell>{`${formatNumber(
+                  product.pricePerEach
+                )} T`}</Table.Cell>
                 <Table.Cell>
-                  {product.pricePerEach * product.quantity}
+                  {`${formatNumber(product.pricePerEach * product.quantity)} T`}
                 </Table.Cell>
                 <Table.Cell>
                   <Button
@@ -65,9 +68,9 @@ const ProductListTable = () => {
 
           <Table.Header>
             <Table.Row>
-              <Table.ColumnHeaderCell>Total</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Total :</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell colSpan={5}>
-                {totalPriceSum}
+                {`${formatNumber(totalPriceSum)} T`}
               </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
