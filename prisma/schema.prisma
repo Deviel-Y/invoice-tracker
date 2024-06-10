@@ -35,5 +35,7 @@ model Invoice {
   invoiceDescription String    @db.Text
   companyName        String
   invoiceTotalPrice  Int
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
   products           Product[]
 }

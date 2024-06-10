@@ -17,6 +17,8 @@ CREATE TABLE `Invoice` (
     `invoiceDescription` TEXT NOT NULL,
     `companyName` VARCHAR(191) NOT NULL,
     `invoiceTotalPrice` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Invoice_invoiceNumber_key`(`invoiceNumber`),
     PRIMARY KEY (`id`)
