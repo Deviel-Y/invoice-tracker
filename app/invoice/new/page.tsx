@@ -1,4 +1,4 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 import ProductForm from "../components/ProductForm";
 import ProductListTable from "../components/ProductListTable";
 import InvoiceInfo from "../components/InvoiceInfo";
@@ -9,10 +9,10 @@ const CreateNewInvoicePage = () => {
       <Box>
         <InvoiceInfo />
       </Box>
-      <Flex gap="5">
+      <Grid gap="5" columns={"3"}>
         <ProductForm />
         <ProductListTable />
-      </Flex>
+      </Grid>
     </Flex>
   );
 };

@@ -18,22 +18,22 @@ const ProductForm = () => {
     formState: { errors },
   } = useForm<ProductType>({ resolver: zodResolver(addProductSchema) });
 
+  const submitHandler = handleSubmit((data) => {
+    const existedProduct = products.find(
+      (product) => product.productName === data.productName
+    );
+
+    if (existedProduct) {
+      toast.error("You cannot add product that is already exists");
+    } else
+      addProduct({
+        ...data,
+        productTotalPrice: data.quantity * data.pricePerEach,
+      });
+  });
+
   return (
-    <form
-      className="col-span-1"
-      onSubmit={handleSubmit((data) => {
-        const existedProduct = products.find(
-          (product) => product.productName === data.productName
-        );
-        if (existedProduct) {
-          toast.error("You cannot add product that is already exist");
-        } else
-          addProduct({
-            ...data,
-            productTotalPrice: data.quantity * data.pricePerEach,
-          });
-      })}
-    >
+    <form className="col-span-1" onSubmit={submitHandler}>
       <Card>
         <Flex direction="column" gap="5">
           <Box>

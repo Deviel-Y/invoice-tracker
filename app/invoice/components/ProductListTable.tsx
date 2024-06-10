@@ -18,6 +18,7 @@ const ProductListTable = () => {
   ];
 
   const products = useProductStore((s) => s.products);
+  const deleteProduct = useProductStore((s) => s.deleteProduct);
 
   const totalPriceSum = products.reduce(
     (acc, sum) => acc + sum.productTotalPrice,
@@ -27,7 +28,7 @@ const ProductListTable = () => {
   return (
     <>
       {products.length !== 0 && (
-        <Table.Root className="col-span-2" variant="surface">
+        <Table.Root className="col-span-2" variant="ghost">
           <Table.Header>
             <Table.Row>
               {tableColumns.map((column) => (
@@ -49,7 +50,12 @@ const ProductListTable = () => {
                   {product.pricePerEach * product.quantity}
                 </Table.Cell>
                 <Table.Cell>
-                  <Button variant="outline" color="red">
+                  <Button
+                    className="!transition-all !cursor-pointer"
+                    onClick={() => deleteProduct(product.productName)}
+                    variant="outline"
+                    color="red"
+                  >
                     Delete
                   </Button>
                 </Table.Cell>
