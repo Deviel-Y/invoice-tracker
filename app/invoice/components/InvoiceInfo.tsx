@@ -2,32 +2,35 @@
 
 import useProductStore from "@/app/store";
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import CalloutAlert from "./Callout";
 import { invoiceInfoSchema, InvoiceInfoType } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 
 const InvoiceInfo = () => {
   const products = useProductStore((s) => s.products);
+  const invoiceTotalPrice = products.reduce(
+    (acc, sum) => acc + sum.productTotalPrice,
+    0
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<InvoiceInfoType>({ resolver: zodResolver(invoiceInfoSchema) });
 
+  const submithandler = handleSubmit((data) =>
+    axios.post("/api/invoice", {
+      ...data,
+      invoiceTotalPrice,
+      products,
+    })
+  );
+
   return (
-    <form
-      onSubmit={handleSubmit((data) =>
-        console.log({
-          ...data,
-          invoiceTotalPrice: products.reduce(
-            (acc, sum) => acc + sum.productTotalPrice,
-            0
-          ),
-          products,
-        })
-      )}
-    >
+    <form onSubmit={submithandler}>
       <Flex direction="column" gap="5">
         <Flex gap="5">
           <Box>
