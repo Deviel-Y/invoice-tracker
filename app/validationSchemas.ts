@@ -30,6 +30,7 @@ export const addProductSchema = z.object({
 
 //And this is for zustand store
 export const ProductStoreSchema = z.object({
+  // id: z.number().optional(),
   productName: z.string(),
 
   quantity: z.number(),

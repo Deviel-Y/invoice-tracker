@@ -6,6 +6,7 @@ import { ProductStoreType } from "./validationSchemas";
 interface ProductStore {
   products: ProductStoreType[];
   addProduct: (product: ProductStoreType) => void;
+  addProductInArray: (products: ProductStoreType[]) => void;
   deleteProduct: (productName: string) => void;
 }
 
@@ -21,5 +22,7 @@ const useProductStore = create<ProductStore>((set) => ({
         (product) => product.productName !== productName
       ),
     })),
+
+  addProductInArray: (products) => set({ products: [...products] }),
 }));
 export default useProductStore;
