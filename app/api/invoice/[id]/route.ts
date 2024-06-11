@@ -1,11 +1,27 @@
 import { invoiceSchema, InvoiceType } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
-import { validData } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Props {
   params: { id: string };
 }
+
+export const DELETE = async (
+  request: NextRequest,
+  { params: { id } }: Props
+) => {
+  const invoice = await prisma.invoice.findUnique({ where: { id } });
+
+  if (!invoice)
+    return NextResponse.json(
+      { error: "Invoice does not exist" },
+      { status: 404 }
+    );
+
+  await prisma.invoice.delete({ where: { id } });
+
+  return NextResponse.json(invoice);
+};
 
 export const PUT = async (request: NextRequest, { params: { id } }: Props) => {
   const body: InvoiceType = await request.json();
