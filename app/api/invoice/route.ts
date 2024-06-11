@@ -27,6 +27,12 @@ export const POST = async (request: NextRequest) => {
       { status: 400 }
     );
 
+  if (products.length === 0)
+    return NextResponse.json(
+      { error: "product cannot be empty" },
+      { status: 400 }
+    );
+
   const newInvoice = await prisma.invoice.create({
     data: {
       companyName,

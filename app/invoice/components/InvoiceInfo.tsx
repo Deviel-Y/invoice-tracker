@@ -32,6 +32,8 @@ const InvoiceInfo = ({ invoice }: Props) => {
   } = useForm<InvoiceInfoType>({ resolver: zodResolver(invoiceInfoSchema) });
 
   const submithandler = handleSubmit((data) => {
+    if (products.length === 0)
+      return toast.error("Product list cannot be empty");
     const promise = invoice
       ? axios.put("/api/invoice/" + invoice?.id, {
           ...data,
