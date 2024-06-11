@@ -18,7 +18,7 @@ interface Props {
   invoice?: Invoice;
 }
 
-const InvoiceInfo = ({ invoice }: Props) => {
+const InvoiceInfoForm = ({ invoice }: Props) => {
   const products = useProductStore((s) => s.products);
   const invoiceTotalPrice = products.reduce(
     (acc, sum) => acc + sum.productTotalPrice,
@@ -116,4 +116,4 @@ const InvoiceInfo = ({ invoice }: Props) => {
   );
 };
 
-export default InvoiceInfo;
+export default InvoiceInfoForm;

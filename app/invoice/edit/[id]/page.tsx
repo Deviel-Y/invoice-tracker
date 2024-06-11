@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
-import InvoiceInfo from "../../components/InvoiceInfo";
+import InvoiceInfoForm from "../../components/InvoiceInfoForm";
 import ProductListTable from "../../components/ProductListTable";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import ProductForm from "../../components/ProductForm";
@@ -20,7 +20,7 @@ const EditInvoicePage = async ({ params: { id } }: Props) => {
   return (
     <Flex direction="column" gap="5">
       <Box>
-        <InvoiceInfo invoice={invoice} />
+        <InvoiceInfoForm invoice={invoice} />
       </Box>
       <Grid gap="5" columns={"3"}>
         <ProductForm />
