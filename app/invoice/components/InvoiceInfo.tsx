@@ -100,7 +100,12 @@ const InvoiceInfo = ({ invoice }: Props) => {
               )}
             </Box>
 
-            <Button size="3" type="submit" color="blue">
+            <Button
+              className="!transition-all !cursor-pointer"
+              size="3"
+              type="submit"
+              color="blue"
+            >
               {invoice ? "Update Invoice" : "Create Invoice"}
             </Button>
           </Flex>
