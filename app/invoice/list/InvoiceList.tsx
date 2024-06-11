@@ -2,6 +2,7 @@ import formatNumber from "@/app/formatNumber";
 import prisma from "@/prisma/client";
 import { Invoice } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
+import Link from "next/link";
 const InvoiceList = async () => {
   const invoices = await prisma.invoice.findMany();
 
@@ -9,8 +10,8 @@ const InvoiceList = async () => {
 
   const columns: { label: string; value: keyof Invoice }[] = [
     { label: "Invoice Number", value: "invoiceNumber" },
-    { label: "Invoice Number", value: "companyName" },
-    { label: "Invoice Number", value: "invoiceTotalPrice" },
+    { label: "Company Name", value: "companyName" },
+    { label: "Total Price", value: "invoiceTotalPrice" },
     { label: "Created At", value: "createdAt" },
     { label: "Updated At", value: "updatedAt" },
   ];
@@ -30,7 +31,11 @@ const InvoiceList = async () => {
       <Table.Body>
         {invoices.map((invoice) => (
           <Table.Row key={invoice.id}>
-            <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
+            <Table.Cell>
+              <Link href={`/invoice/${invoice.id}`}>
+                {invoice.invoiceNumber}
+              </Link>
+            </Table.Cell>
             <Table.Cell>{invoice.companyName}</Table.Cell>
             <Table.Cell>{`${formatNumber(
               invoice.invoiceTotalPrice

@@ -9,19 +9,30 @@ import { useEffect } from "react";
 
 interface Props {
   productList?: ProductType[];
+  showDeleteButton?: boolean;
+  variant?: "ghost" | "surface" | undefined;
 }
 
-const ProductListTable = ({ productList }: Props) => {
+const ProductListTable = ({
+  productList,
+  showDeleteButton = true,
+  variant = "ghost",
+}: Props) => {
   const tableColumns: {
     label: string;
     value: keyof Product | "Action Button" | "Total Price";
+    visibility?: boolean;
   }[] = [
-    { label: "Product Name", value: "productName" },
-    { label: "Quantity", value: "quantity" },
-    { label: "Unit", value: "unit" },
-    { label: "Price Per Each", value: "pricePerEach" },
-    { label: "Total Price", value: "Total Price" },
-    { label: "Action Button", value: "Action Button" },
+    { label: "Product Name", value: "productName", visibility: true },
+    { label: "Quantity", value: "quantity", visibility: true },
+    { label: "Unit", value: "unit", visibility: true },
+    { label: "Price Per Each", value: "pricePerEach", visibility: true },
+    { label: "Total Price", value: "Total Price", visibility: true },
+    {
+      label: "Action Button",
+      value: "Action Button",
+      visibility: showDeleteButton,
+    },
   ];
 
   const products = useProductStore((s) => s.products);
@@ -47,12 +58,12 @@ const ProductListTable = ({ productList }: Props) => {
   return (
     <>
       {products.length !== 0 && (
-        <Table.Root className="col-span-2" variant="ghost">
+        <Table.Root className="col-span-2" variant={variant}>
           <Table.Header>
             <Table.Row>
               {tableColumns.map((column) => (
-                <Table.ColumnHeaderCell key={column.value}>
-                  {column.label}
+                <Table.ColumnHeaderCell align="center" key={column.value}>
+                  {column.visibility && column.label}
                 </Table.ColumnHeaderCell>
               ))}
             </Table.Row>
@@ -61,25 +72,29 @@ const ProductListTable = ({ productList }: Props) => {
           <Table.Body>
             {products.map((product, index) => (
               <Table.Row key={index}>
-                <Table.Cell>{product.productName}</Table.Cell>
-                <Table.Cell>{formatNumber(product.quantity)}</Table.Cell>
-                <Table.Cell>{product.unit}</Table.Cell>
-                <Table.Cell>{`${formatNumber(
+                <Table.Cell align="center">{product.productName}</Table.Cell>
+                <Table.Cell align="center">
+                  {formatNumber(product.quantity)}
+                </Table.Cell>
+                <Table.Cell align="center">{product.unit}</Table.Cell>
+                <Table.Cell align="center">{`${formatNumber(
                   product.pricePerEach
                 )} T`}</Table.Cell>
-                <Table.Cell>
+                <Table.Cell align="center">
                   {`${formatNumber(product.pricePerEach * product.quantity)} T`}
                 </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className="!transition-all !cursor-pointer"
-                    onClick={() => deleteProduct(product.productName)}
-                    variant="outline"
-                    color="red"
-                  >
-                    Delete
-                  </Button>
-                </Table.Cell>
+                {showDeleteButton && (
+                  <Table.Cell align="center">
+                    <Button
+                      className="!transition-all !cursor-pointer"
+                      onClick={() => deleteProduct(product.productName)}
+                      variant="outline"
+                      color="red"
+                    >
+                      Delete
+                    </Button>
+                  </Table.Cell>
+                )}
               </Table.Row>
             ))}
           </Table.Body>
