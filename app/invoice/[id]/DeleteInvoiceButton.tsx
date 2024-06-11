@@ -1,22 +1,52 @@
 "use client";
 
-import { Invoice } from "@prisma/client";
-import { Button } from "@radix-ui/themes";
+import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 
 interface Props {
-  invoice: Invoice;
+  invoiceId: string;
 }
 
-const DeleteInvoiceButton = ({ invoice }: Props) => {
+const DeleteInvoiceButton = ({ invoiceId }: Props) => {
   return (
-    <Button
-      className="!transition-all !cursor-pointer"
-      color="red"
-      onClick={() => axios.delete(`/api/invoice/${invoice.id}`)}
-    >
-      Delete invoice
-    </Button>
+    <AlertDialog.Root>
+      <AlertDialog.Trigger>
+        <Button color="red" className="!transition-all !cursor-pointer">
+          Delete Invoice
+        </Button>
+      </AlertDialog.Trigger>
+
+      <AlertDialog.Content>
+        <AlertDialog.Title>Invoice Deletion</AlertDialog.Title>
+
+        <AlertDialog.Description>
+          Are you sure you want to delete this invoice? this action cannot be
+          undone.
+        </AlertDialog.Description>
+
+        <Flex gap="4" justify="end" mt="5">
+          <AlertDialog.Cancel>
+            <Button
+              color="gray"
+              variant="outline"
+              className="!transition-all !cursor-pointer"
+            >
+              Cancel
+            </Button>
+          </AlertDialog.Cancel>
+
+          <AlertDialog.Action>
+            <Button
+              color="red"
+              className="!transition-all !cursor-pointer"
+              onClick={() => axios.delete(`/api/invoice/${invoiceId}`)}
+            >
+              Delete
+            </Button>
+          </AlertDialog.Action>
+        </Flex>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   );
 };
 

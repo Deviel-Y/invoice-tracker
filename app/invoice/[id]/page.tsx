@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import { Box, Container, Flex, Grid } from "@radix-ui/themes";
+import { Box, Card, Container, Flex, Grid } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import ProductListTable from "../components/ProductListTable";
 import DeleteInvoiceButton from "./DeleteInvoiceButton";
@@ -19,9 +19,9 @@ const InvoiceDetailPage = async ({ params: { id } }: Props) => {
   if (!invoice) notFound();
 
   return (
-    <>
-      <Grid gap="5" columns={{ initial: "1", sm: "5" }}>
-        <Box className="md:col-span-4">
+    <Grid gap="5" columns={{ initial: "1", sm: "5" }}>
+      <Card className="md:col-span-4">
+        <Box>
           <InvoiceInfo invoice={invoice} />
           <ProductListTable
             variant="surface"
@@ -29,12 +29,12 @@ const InvoiceDetailPage = async ({ params: { id } }: Props) => {
             showDeleteButton={false}
           />
         </Box>
-        <Flex gap="3" direction={"column"}>
-          <EditInvoiceButton invoiceId={invoice.id} />
-          <DeleteInvoiceButton invoiceId={invoice.id} />
-        </Flex>
-      </Grid>
-    </>
+      </Card>
+      <Flex gap="3" direction={"column"}>
+        <EditInvoiceButton invoiceId={invoice.id} />
+        <DeleteInvoiceButton invoiceId={invoice.id} />
+      </Flex>
+    </Grid>
   );
 };
 

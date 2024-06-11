@@ -7,7 +7,7 @@ interface Props {
 
 const InvoiceInfo = ({ invoice }: Props) => {
   return (
-    <Card mb="5">
+    <Box mb="5">
       <Heading mb="6" size="6">
         Invoice Details
       </Heading>
@@ -34,7 +34,7 @@ const InvoiceInfo = ({ invoice }: Props) => {
           <Text>{`${invoice.invoiceDescription}`}</Text>
         </Flex>
       </Flex>
-    </Card>
+    </Box>
   );
 };
 
