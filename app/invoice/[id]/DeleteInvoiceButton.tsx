@@ -2,12 +2,15 @@
 
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface Props {
   invoiceId: string;
 }
 
 const DeleteInvoiceButton = ({ invoiceId }: Props) => {
+  const router = useRouter();
+
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
@@ -39,7 +42,10 @@ const DeleteInvoiceButton = ({ invoiceId }: Props) => {
             <Button
               color="red"
               className="!transition-all !cursor-pointer"
-              onClick={() => axios.delete(`/api/invoice/${invoiceId}`)}
+              onClick={() => {
+                axios.delete(`/api/invoice/${invoiceId}`);
+                router.push("/invoice/list");
+              }}
             >
               Delete
             </Button>

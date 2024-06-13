@@ -13,7 +13,7 @@ const EditInvoiceButton = ({ invoiceId }: Props) => {
   return (
     <Button
       className="!transition-all !cursor-pointer"
-      onClick={() => router.push(`invoice/edit/${invoiceId}`)}
+      onClick={() => router.push(`/invoice/edit/${invoiceId}`)}
     >
       Edit Invoice
     </Button>

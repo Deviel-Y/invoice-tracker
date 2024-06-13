@@ -13,12 +13,15 @@ import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import CalloutAlert from "./Callout";
 import { Invoice } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface Props {
   invoice?: Invoice;
 }
 
 const InvoiceInfoForm = ({ invoice }: Props) => {
+  const router = useRouter();
+
   const products = useProductStore((s) => s.products);
   const invoiceTotalPrice = products.reduce(
     (acc, sum) => acc + sum.productTotalPrice,
@@ -51,6 +54,8 @@ const InvoiceInfoForm = ({ invoice }: Props) => {
       success: "Invoice Saved",
       error: "Could not save invoice",
     });
+
+    router.push("/invoice/list");
   });
 
   return (
