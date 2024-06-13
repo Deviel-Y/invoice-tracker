@@ -2,12 +2,14 @@
 
 import { Flex, Text } from "@radix-ui/themes";
 import classNames from "classnames";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TfiAgenda } from "react-icons/tfi";
 
 const Navbar = () => {
   const currentPath = usePathname();
+  const { data: session, status } = useSession();
 
   const navLinks: { label: string; href: string }[] = [
     { label: "Dasboard", href: "/" },
@@ -38,7 +40,15 @@ const Navbar = () => {
           </Flex>
         </ul>
 
-        <Text>LogIn / LogOut</Text>
+        {status === "unauthenticated" && (
+          <Link href="/api/auth/signin">Sign In</Link>
+        )}
+        {status === "authenticated" && (
+          <Flex gap="5">
+            <Text>{session.user?.email}</Text>
+            <Link href="/api/auth/signout">Sign out</Link>
+          </Flex>
+        )}
       </Flex>
     </nav>
   );
