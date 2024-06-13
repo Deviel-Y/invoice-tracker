@@ -59,6 +59,7 @@ const DeleteInvoiceButton = ({ invoiceId, children, variant }: Props) => {
               onClick={() => {
                 axios.delete(`/api/invoice/${invoiceId}`);
                 router.push("/invoice/list");
+                router.refresh();
               }}
             >
               Delete
