@@ -32,7 +32,9 @@ const InvoiceDetailPage = async ({ params: { id } }: Props) => {
       </Card>
       <Flex gap="3" direction={"column"}>
         <EditInvoiceButton invoiceId={invoice.id} />
-        <DeleteInvoiceButton invoiceId={invoice.id} />
+        <DeleteInvoiceButton invoiceId={invoice.id}>
+          Delete Invoice
+        </DeleteInvoiceButton>
       </Flex>
     </Grid>
   );

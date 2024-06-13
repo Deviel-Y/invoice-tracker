@@ -3,19 +3,33 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ReactNode } from "react";
 
 interface Props {
   invoiceId: string;
+  children: ReactNode;
+  variant?:
+    | "soft"
+    | "classic"
+    | "solid"
+    | "surface"
+    | "outline"
+    | "ghost"
+    | undefined;
 }
 
-const DeleteInvoiceButton = ({ invoiceId }: Props) => {
+const DeleteInvoiceButton = ({ invoiceId, children, variant }: Props) => {
   const router = useRouter();
 
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Button color="red" className="!transition-all !cursor-pointer">
-          Delete Invoice
+        <Button
+          variant={variant}
+          color="red"
+          className="!transition-all !cursor-pointer"
+        >
+          {children}
         </Button>
       </AlertDialog.Trigger>
 
