@@ -17,35 +17,39 @@ const InvoiceList = async () => {
   ];
 
   return (
-    <Table.Root variant="surface">
-      <Table.Header>
-        <Table.Row>
-          {columns.map((column) => (
-            <Table.ColumnHeaderCell key={column.value}>
-              {column.label}
-            </Table.ColumnHeaderCell>
-          ))}
-        </Table.Row>
-      </Table.Header>
+    <>
+      {invoices.length !== 0 && (
+        <Table.Root variant="surface">
+          <Table.Header>
+            <Table.Row>
+              {columns.map((column) => (
+                <Table.ColumnHeaderCell key={column.value}>
+                  {column.label}
+                </Table.ColumnHeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Header>
 
-      <Table.Body>
-        {invoices.map((invoice) => (
-          <Table.Row key={invoice.id}>
-            <Table.Cell>
-              <Link href={`/invoice/${invoice.id}`}>
-                {invoice.invoiceNumber}
-              </Link>
-            </Table.Cell>
-            <Table.Cell>{invoice.companyName}</Table.Cell>
-            <Table.Cell>{`${formatNumber(
-              invoice.invoiceTotalPrice
-            )} T`}</Table.Cell>
-            <Table.Cell>{invoice.createdAt.toDateString()}</Table.Cell>
-            <Table.Cell>{invoice.updatedAt.toDateString()}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+          <Table.Body>
+            {invoices.map((invoice) => (
+              <Table.Row key={invoice.id}>
+                <Table.Cell>
+                  <Link href={`/invoice/${invoice.id}`}>
+                    {invoice.invoiceNumber}
+                  </Link>
+                </Table.Cell>
+                <Table.Cell>{invoice.companyName}</Table.Cell>
+                <Table.Cell>{`${formatNumber(
+                  invoice.invoiceTotalPrice
+                )} T`}</Table.Cell>
+                <Table.Cell>{invoice.createdAt.toDateString()}</Table.Cell>
+                <Table.Cell>{invoice.updatedAt.toDateString()}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      )}
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { ProductStoreType } from "./validationSchemas";
+import { ProductStoreType } from "./invoiceValidationSchemas";
 
 interface ProductStore {
   products: ProductStoreType[];

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TfiAgenda } from "react-icons/tfi";
 
-const navbar = () => {
+const Navbar = () => {
   const currentPath = usePathname();
 
   const navLinks: { label: string; href: string }[] = [
@@ -44,4 +44,4 @@ const navbar = () => {
   );
 };
 
-export default navbar;
+export default Navbar;

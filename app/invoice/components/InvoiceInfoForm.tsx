@@ -5,7 +5,7 @@ import {
   invoiceInfoSchema,
   InvoiceInfoType,
   ProductType,
-} from "@/app/validationSchemas";
+} from "@/app/invoiceValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";
@@ -56,6 +56,7 @@ const InvoiceInfoForm = ({ invoice }: Props) => {
     });
 
     router.push("/invoice/list");
+    router.refresh();
   });
 
   return (

@@ -8,7 +8,7 @@ const InvoiceListPage = () => {
       <Flex>
         <CreateNewInvoiceButton />
       </Flex>
-      <InvoiceList />;
+      <InvoiceList />
     </Grid>
   );
 };

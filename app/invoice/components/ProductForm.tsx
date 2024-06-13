@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import useProductStore from "@/app/store";
-import { addProductSchema, ProductType } from "@/app/validationSchemas";
+import { addProductSchema, ProductType } from "@/app/invoiceValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
 import CalloutAlert from "./Callout";

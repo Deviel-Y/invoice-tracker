@@ -1,4 +1,4 @@
-import { invoiceSchema, InvoiceType } from "@/app/validationSchemas";
+import { invoiceSchema, InvoiceType } from "@/app/invoiceValidationSchemas";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

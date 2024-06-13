@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { Container, Theme } from "@radix-ui/themes";
-import Navbar from "./navbar";
+import Navbar from "./Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
