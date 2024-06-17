@@ -6,12 +6,17 @@ import { BiSolidTrash } from "react-icons/bi";
 import DeleteInvoiceButton from "../[id]/DeleteInvoiceButton";
 import NextLink from "../components/Link";
 import Link from "next/link";
+import { ArrowBottomLeftIcon, ArrowTopLeftIcon } from "@radix-ui/react-icons";
 
 interface Props {
   invoices: Invoice[];
+  searchParams: { search: string; orderByFilter: keyof Invoice };
 }
 
-const InvoiceList = ({ invoices }: Props) => {
+const InvoiceList = ({
+  invoices,
+  searchParams: { orderByFilter, search },
+}: Props) => {
   return (
     <>
       {invoices.length !== 0 && (
@@ -20,10 +25,14 @@ const InvoiceList = ({ invoices }: Props) => {
             <Table.Row>
               {columns.map((column) => (
                 <Table.ColumnHeaderCell align="center" key={column.value}>
+                  {orderByFilter === column.value && (
+                    <ArrowBottomLeftIcon className="inline" />
+                  )}
                   <Link
                     href={{
                       query: {
                         orderByFilter: column.value,
+                        search,
                       },
                     }}
                   >

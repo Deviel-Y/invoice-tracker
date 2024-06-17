@@ -3,17 +3,21 @@ import InvoiceList, { columnNames } from "./InvoiceList";
 import CreateNewInvoiceButton from "./CreateNewInvoiceButton";
 import prisma from "@/prisma/client";
 import { Invoice } from "@prisma/client";
+import ActionSection from "./ActionSection";
 
 interface Props {
-  searchParams: { orderByFilter: keyof Invoice };
+  searchParams: { orderByFilter: keyof Invoice; search: string };
 }
 
-const InvoiceListPage = async ({ searchParams: { orderByFilter } }: Props) => {
+const InvoiceListPage = async ({
+  searchParams: { orderByFilter, search },
+}: Props) => {
   const orderBy = columnNames.includes(orderByFilter)
-    ? { [orderByFilter]: "asc" }
+    ? { [orderByFilter]: "desc" }
     : undefined;
 
   const invoices = await prisma.invoice.findMany({
+    where: { companyName: { contains: search } },
     orderBy,
   });
 
@@ -21,10 +25,11 @@ const InvoiceListPage = async ({ searchParams: { orderByFilter } }: Props) => {
 
   return (
     <Grid columns="1" gap="3">
-      <Flex>
-        <CreateNewInvoiceButton />
-      </Flex>
-      <InvoiceList invoices={invoices} />
+      <ActionSection />
+      <InvoiceList
+        searchParams={{ search, orderByFilter }}
+        invoices={invoices}
+      />
     </Grid>
   );
 };
