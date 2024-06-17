@@ -6,11 +6,11 @@ import Link from "../components/Link";
 import { BiSolidTrash } from "react-icons/bi";
 import DeleteInvoiceButton from "../[id]/DeleteInvoiceButton";
 
-const InvoiceList = async () => {
-  const invoices = await prisma.invoice.findMany();
+interface Props {
+  invoices: Invoice[];
+}
 
-  if (!invoices) return null;
-
+const InvoiceList = ({ invoices }: Props) => {
   const columns: { label: string; value: keyof Invoice | "actionButton" }[] = [
     { label: "Invoice Number", value: "invoiceNumber" },
     { label: "Company Name", value: "companyName" },
@@ -65,7 +65,5 @@ const InvoiceList = async () => {
     </>
   );
 };
-
-export const dynamic = "force-dynamic";
 
 export default InvoiceList;
