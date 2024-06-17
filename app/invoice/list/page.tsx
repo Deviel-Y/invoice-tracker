@@ -1,10 +1,21 @@
 import { Flex, Grid } from "@radix-ui/themes";
-import InvoiceList from "./InvoiceList";
+import InvoiceList, { columnNames } from "./InvoiceList";
 import CreateNewInvoiceButton from "./CreateNewInvoiceButton";
 import prisma from "@/prisma/client";
+import { Invoice } from "@prisma/client";
 
-const InvoiceListPage = async () => {
-  const invoices = await prisma.invoice.findMany();
+interface Props {
+  searchParams: { orderByFilter: keyof Invoice };
+}
+
+const InvoiceListPage = async ({ searchParams: { orderByFilter } }: Props) => {
+  const orderBy = columnNames.includes(orderByFilter)
+    ? { [orderByFilter]: "asc" }
+    : undefined;
+
+  const invoices = await prisma.invoice.findMany({
+    orderBy,
+  });
 
   if (!invoices) return null;
 

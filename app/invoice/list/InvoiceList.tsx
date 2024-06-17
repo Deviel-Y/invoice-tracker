@@ -2,24 +2,16 @@ import formatNumber from "@/app/formatNumber";
 import prisma from "@/prisma/client";
 import { Invoice } from "@prisma/client";
 import { Button, Table } from "@radix-ui/themes";
-import Link from "../components/Link";
 import { BiSolidTrash } from "react-icons/bi";
 import DeleteInvoiceButton from "../[id]/DeleteInvoiceButton";
+import NextLink from "../components/Link";
+import Link from "next/link";
 
 interface Props {
   invoices: Invoice[];
 }
 
 const InvoiceList = ({ invoices }: Props) => {
-  const columns: { label: string; value: keyof Invoice | "actionButton" }[] = [
-    { label: "Invoice Number", value: "invoiceNumber" },
-    { label: "Company Name", value: "companyName" },
-    { label: "Total Price", value: "invoiceTotalPrice" },
-    { label: "Created At", value: "createdAt" },
-    { label: "Updated At", value: "updatedAt" },
-    { label: "Action button", value: "actionButton" },
-  ];
-
   return (
     <>
       {invoices.length !== 0 && (
@@ -28,9 +20,20 @@ const InvoiceList = ({ invoices }: Props) => {
             <Table.Row>
               {columns.map((column) => (
                 <Table.ColumnHeaderCell align="center" key={column.value}>
-                  {column.label}
+                  <Link
+                    href={{
+                      query: {
+                        orderByFilter: column.value,
+                      },
+                    }}
+                  >
+                    {column.label}
+                  </Link>
                 </Table.ColumnHeaderCell>
               ))}
+              <Table.ColumnHeaderCell align="center">
+                Action Button
+              </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -38,9 +41,9 @@ const InvoiceList = ({ invoices }: Props) => {
             {invoices.map((invoice) => (
               <Table.Row align="center" key={invoice.id}>
                 <Table.Cell align="center">
-                  <Link href={`/invoice/${invoice.id}`}>
+                  <NextLink href={`/invoice/${invoice.id}`}>
                     {invoice.invoiceNumber}
-                  </Link>
+                  </NextLink>
                 </Table.Cell>
                 <Table.Cell align="center">{invoice.companyName}</Table.Cell>
                 <Table.Cell align="center">{`${formatNumber(
@@ -65,5 +68,15 @@ const InvoiceList = ({ invoices }: Props) => {
     </>
   );
 };
+
+const columns: { label: string; value: keyof Invoice | "actionButton" }[] = [
+  { label: "Invoice Number", value: "invoiceNumber" },
+  { label: "Company Name", value: "companyName" },
+  { label: "Total Price", value: "invoiceTotalPrice" },
+  { label: "Created At", value: "createdAt" },
+  { label: "Updated At", value: "updatedAt" },
+];
+
+export const columnNames = columns.map((column) => column.value);
 
 export default InvoiceList;
