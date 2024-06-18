@@ -13,7 +13,9 @@ const SearchInput = () => {
     const searchQuery = event.target.value;
 
     if (searchQuery) params.set("search", searchQuery);
-    if (!searchQuery) params.delete("search");
+    if (!searchQuery) {
+      params.set("search", "");
+    }
 
     const query = params.size && "?" + params.toString();
 

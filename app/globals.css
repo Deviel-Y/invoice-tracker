@@ -4,6 +4,6 @@
 
 @layer utilities {
   .nav-link {
-    @apply hover:text-zinc-800 transition-colors text-zinc-500;
+    @apply hover:text-gray-300 transition-colors text-gray-400;
   }
 }

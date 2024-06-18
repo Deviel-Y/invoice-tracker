@@ -37,7 +37,7 @@ const Navbar = () => {
                 <Link
                   className={classNames({
                     "nav-link": true,
-                    "font-medium !text-zinc-900": currentPath === link.href,
+                    "font-medium !text-gray-200": currentPath === link.href,
                   })}
                   href={link.href}
                 >
