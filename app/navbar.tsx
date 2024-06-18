@@ -1,6 +1,14 @@
 "use client";
 
-import { Avatar, Box, Button, Flex, Popover, Text } from "@radix-ui/themes";
+import {
+  AlertDialog,
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Popover,
+  Text,
+} from "@radix-ui/themes";
 import classNames from "classnames";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -57,7 +65,6 @@ export default Navbar;
 
 const UserInfo = () => {
   const { data: session } = useSession();
-  const router = useRouter();
 
   return (
     <Popover.Root>
@@ -79,18 +86,61 @@ const UserInfo = () => {
           <Box>
             <Flex direction="column" gap="2" align="center">
               <Text color="gray">{session?.user?.email}</Text>
-              <Button
-                className="!transition-all !cursor-pointer"
-                variant="soft"
-                onClick={() => signOut()}
-                color="red"
-              >
-                Sign Out
-              </Button>
+              <SignOutConfirmation />
             </Flex>
           </Box>
         </Flex>
       </Popover.Content>
     </Popover.Root>
+  );
+};
+
+export const SignOutConfirmation = () => {
+  const router = useRouter();
+
+  return (
+    <AlertDialog.Root>
+      <AlertDialog.Trigger>
+        <Button
+          className="!transition-all !cursor-pointer"
+          variant="soft"
+          color="red"
+        >
+          Sign Out
+        </Button>
+      </AlertDialog.Trigger>
+
+      <AlertDialog.Content>
+        <AlertDialog.Title>SignOut Confirmation</AlertDialog.Title>
+        <AlertDialog.Description>
+          Are you sure you want to sign out?
+        </AlertDialog.Description>
+
+        <Flex gap="4" justify="end" mt="5">
+          <AlertDialog.Cancel>
+            <Button
+              color="gray"
+              variant="outline"
+              className="!transition-all !cursor-pointer"
+            >
+              Cancel
+            </Button>
+          </AlertDialog.Cancel>
+
+          <AlertDialog.Action>
+            <Button
+              color="red"
+              className="!transition-all !cursor-pointer"
+              onClick={() => {
+                signOut();
+                router.push("/");
+              }}
+            >
+              Sign out
+            </Button>
+          </AlertDialog.Action>
+        </Flex>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   );
 };
