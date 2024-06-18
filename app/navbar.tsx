@@ -1,10 +1,10 @@
 "use client";
 
-import { Flex, Text } from "@radix-ui/themes";
+import { Avatar, Box, Button, Flex, Popover, Text } from "@radix-ui/themes";
 import classNames from "classnames";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TfiAgenda } from "react-icons/tfi";
 
 const Navbar = () => {
@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <nav className="border-b p-4 mb-5 ">
-      <Flex justify={"between"}>
+      <Flex justify="between" align="center">
         <ul>
           <Flex align={"center"} gap="5">
             <Link href="/">
@@ -44,10 +44,9 @@ const Navbar = () => {
           <Link href="/api/auth/signin">Sign In</Link>
         )}
         {status === "authenticated" && (
-          <Flex gap="5">
-            <Text>{session.user?.email}</Text>
-            <Link href="/api/auth/signout">Sign out</Link>
-          </Flex>
+          <Text>
+            Hi <UserInfo />
+          </Text>
         )}
       </Flex>
     </nav>
@@ -55,3 +54,43 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const UserInfo = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger>
+        <Text color="indigo" className="cursor-pointer">
+          {session?.user?.name}
+        </Text>
+      </Popover.Trigger>
+
+      <Popover.Content>
+        <Flex gap="4" align="center">
+          <Avatar
+            size="4"
+            src={session?.user?.image!}
+            alt="Profile Picture"
+            fallback="?"
+            radius="full"
+          />
+          <Box>
+            <Flex direction="column" gap="2" align="center">
+              <Text color="gray">{session?.user?.email}</Text>
+              <Button
+                className="!transition-all !cursor-pointer"
+                variant="soft"
+                onClick={() => signOut()}
+                color="red"
+              >
+                Sign Out
+              </Button>
+            </Flex>
+          </Box>
+        </Flex>
+      </Popover.Content>
+    </Popover.Root>
+  );
+};
