@@ -43,91 +43,100 @@ const InvoiceInfoForm = ({ invoice }: Props) => {
       return toast.error("Product list cannot be empty");
 
     invoice
-      ? await axios
+      ? (setLoading(true),
+        await axios
           .put("/api/invoice/" + invoice?.id, {
             ...data,
             invoiceTotalPrice,
             products,
           })
           .then(() => {
-            setLoading(true);
             router.push("/invoice/list");
             router.refresh();
           })
-          .catch(() => setLoading(false))
-      : await axios
+          .catch(() => {
+            setLoading(false);
+            toast.error("Unexpected Error Occured");
+          }))
+      : (setLoading(true),
+        await axios
           .post("/api/invoice", {
             ...data,
             invoiceTotalPrice,
             products,
           })
           .then(() => {
-            setLoading(true);
             router.push("/invoice/list");
             router.refresh();
           })
-          .catch(() => setLoading(false));
+          .catch(() => {
+            setLoading(false);
+            toast.error("Unexpected Error Occured");
+          }));
   });
 
   return (
-    <form onSubmit={submithandler}>
-      <Flex direction="column" gap="5">
-        <Flex gap="5">
-          <Box>
-            <Text as="label">Invoice Number</Text>
-            <TextField.Root
-              defaultValue={invoice?.invoiceNumber}
-              className="!transition-all"
-              type="number"
-              size="3"
-              {...register("invoiceNumber", { valueAsNumber: true })}
-            />
-            {errors.invoiceNumber && (
-              <CalloutAlert>{errors.invoiceNumber.message}</CalloutAlert>
-            )}
-          </Box>
+    <>
+      <form onSubmit={submithandler}>
+        <Flex direction="column" gap="5">
+          <Flex gap="5">
+            <Box>
+              <Text as="label">Invoice Number</Text>
+              <TextField.Root
+                defaultValue={invoice?.invoiceNumber}
+                className="!transition-all"
+                type="number"
+                size="3"
+                {...register("invoiceNumber", { valueAsNumber: true })}
+              />
+              {errors.invoiceNumber && (
+                <CalloutAlert>{errors.invoiceNumber.message}</CalloutAlert>
+              )}
+            </Box>
 
-          <Box flexGrow="1">
-            <Text as="label">Company Name</Text>
-            <TextField.Root
-              defaultValue={invoice?.companyName}
-              className="!transition-all"
+            <Box flexGrow="1">
+              <Text as="label">Company Name</Text>
+              <TextField.Root
+                defaultValue={invoice?.companyName}
+                className="!transition-all"
+                size="3"
+                {...register("companyName")}
+              />
+              {errors.companyName && (
+                <CalloutAlert>{errors.companyName.message}</CalloutAlert>
+              )}
+            </Box>
+          </Flex>
+
+          <Flex gap="5" align="end">
+            <Box flexGrow="1">
+              <Text as="label">Invoice Description</Text>
+              <TextField.Root
+                defaultValue={invoice?.invoiceDescription}
+                className="!transition-all"
+                size="3"
+                {...register("invoiceDescription")}
+              />
+              {errors.invoiceDescription && (
+                <CalloutAlert>{errors.invoiceDescription.message}</CalloutAlert>
+              )}
+            </Box>
+
+            <Button
+              disabled={loading}
+              className="!transition-all !cursor-pointer"
               size="3"
-              {...register("companyName")}
-            />
-            {errors.companyName && (
-              <CalloutAlert>{errors.companyName.message}</CalloutAlert>
-            )}
-          </Box>
+              type="submit"
+              color="blue"
+            >
+              {loading && <LoadingSpinner />}
+              {invoice ? "Update Invoice" : "Create Invoice"}
+            </Button>
+          </Flex>
         </Flex>
-
-        <Flex gap="5" align="end">
-          <Box flexGrow="1">
-            <Text as="label">Invoice Description</Text>
-            <TextField.Root
-              defaultValue={invoice?.invoiceDescription}
-              className="!transition-all"
-              size="3"
-              {...register("invoiceDescription")}
-            />
-            {errors.invoiceDescription && (
-              <CalloutAlert>{errors.invoiceDescription.message}</CalloutAlert>
-            )}
-          </Box>
-
-          <Button
-            disabled={loading}
-            className="!transition-all !cursor-pointer"
-            size="3"
-            type="submit"
-            color="blue"
-          >
-            {loading && <LoadingSpinner />}
-            {invoice ? "Update Invoice" : "Create Invoice"}
-          </Button>
-        </Flex>
-      </Flex>
-    </form>
+      </form>
+      <Toaster />
+    </>
   );
 };
 
