@@ -17,7 +17,7 @@ import { TfiAgenda } from "react-icons/tfi";
 
 const Navbar = () => {
   const currentPath = usePathname();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const navLinks: { label: string; href: string }[] = [
     { label: "Dasboard", href: "/" },
@@ -48,7 +48,7 @@ const Navbar = () => {
           </Flex>
         </ul>
 
-        {status === "unauthenticated" && (
+        {status === "unauthenticated" && currentPath !== "/userAuth/signin" && (
           <Link href="/api/auth/signin">Sign In</Link>
         )}
         {status === "authenticated" && (
@@ -70,7 +70,7 @@ const UserInfo = () => {
     <Popover.Root>
       <Popover.Trigger>
         <Text color="indigo" className="cursor-pointer">
-          {session?.user?.name}
+          {session?.user?.name || session?.user?.email}
         </Text>
       </Popover.Trigger>
 
