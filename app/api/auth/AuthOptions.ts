@@ -9,6 +9,14 @@ const AuthOption: NextAuthOptions = {
     signIn: "/userAuth/signin",
   },
 
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      url.startsWith("/") ? `${url}` : `${baseUrl}`;
+
+      return baseUrl;
+    },
+  },
+
   adapter: PrismaAdapter(prisma),
 
   session: { strategy: "jwt" },
