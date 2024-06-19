@@ -5,6 +5,7 @@ import { ProductStoreType } from "./invoiceValidationSchemas";
 
 interface ProductStore {
   products: ProductStoreType[];
+  resetProducts: () => void;
   addProduct: (product: ProductStoreType) => void;
   addProductInArray: (products: ProductStoreType[]) => void;
   deleteProduct: (productName: string) => void;
@@ -12,6 +13,11 @@ interface ProductStore {
 
 const useProductStore = create<ProductStore>((set) => ({
   products: [],
+
+  resetProducts: () =>
+    set({
+      products: [],
+    }),
 
   addProduct: (product) =>
     set((store) => ({ products: [...store.products, product] })),

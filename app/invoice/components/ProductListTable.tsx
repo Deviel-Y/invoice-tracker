@@ -6,6 +6,7 @@ import { ProductType } from "@/app/invoiceValidationSchemas";
 import { Invoice, Product } from "@prisma/client";
 import { Button, Table } from "@radix-ui/themes";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   productList?: ProductType[];
@@ -18,6 +19,8 @@ const ProductListTable = ({
   showDeleteButton = true,
   variant = "ghost",
 }: Props) => {
+  const router = useRouter();
+
   const tableColumns: {
     label: string;
     value: keyof Product | "Action Button" | "Total Price";
@@ -37,9 +40,12 @@ const ProductListTable = ({
 
   const products = useProductStore((s) => s.products);
   const deleteProduct = useProductStore((s) => s.deleteProduct);
+  const resetProducts = useProductStore((s) => s.resetProducts);
   const addproductInArray = useProductStore((s) => s.addProductInArray);
 
   useEffect(() => {
+    resetProducts();
+
     if (productList) {
       const newProduct = productList?.map((product) => ({
         productTotalPrice: product.quantity * product.pricePerEach,

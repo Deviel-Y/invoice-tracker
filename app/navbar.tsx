@@ -70,7 +70,7 @@ const UserInfo = () => {
     <Popover.Root>
       <Popover.Trigger>
         <Text color="indigo" className="cursor-pointer">
-          {session?.user?.name || session?.user?.email}
+          {session?.user?.name || "User"}
         </Text>
       </Popover.Trigger>
 
