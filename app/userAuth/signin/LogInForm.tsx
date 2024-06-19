@@ -38,7 +38,6 @@ const LogInForm = () => {
 
   return (
     <form
-      className="!transition-all"
       onSubmit={handleSubmit((data) => {
         signIn("credentials", { email: data.email, password: data.password });
       })}
@@ -52,6 +51,7 @@ const LogInForm = () => {
           <Box>
             <TextField.Root
               {...register("email")}
+              className="!transition-all"
               radius="full"
               size="3"
               type="email"
@@ -70,6 +70,7 @@ const LogInForm = () => {
             <Box>
               <TextField.Root
                 {...register("password")}
+                className="!transition-all"
                 radius="full"
                 size="3"
                 type={!isPasswordVisible ? "password" : "text"}
