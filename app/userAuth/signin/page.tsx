@@ -1,7 +1,7 @@
-import LogInForm from "./LogInForm";
+import SegmentedAuthentication from "./SegmentedAuthentication";
 
 const LoginPage = () => {
-  return <LogInForm />;
+  return <SegmentedAuthentication />;
 };
 
 export default LoginPage;

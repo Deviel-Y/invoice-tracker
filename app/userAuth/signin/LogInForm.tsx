@@ -5,17 +5,16 @@ import Link from "@/app/invoice/components/Link";
 import { userSchema, UserType } from "@/app/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Box,
   Button,
   Card,
   Flex,
   Heading,
   IconButton,
-  TextField,
   Text,
-  Box,
+  TextField,
 } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -45,7 +44,7 @@ const LogInForm = () => {
       <Card>
         <Flex p="3" gap="6" direction="column">
           <Heading size="8" align="center">
-            Login
+            Sign In
           </Heading>
 
           <Box>
@@ -109,10 +108,6 @@ const LogInForm = () => {
           >
             Continue
           </Button>
-
-          <Text align="center">
-            Don't have an account ? <Link href="/">Register</Link>
-          </Text>
         </Flex>
       </Card>
     </form>

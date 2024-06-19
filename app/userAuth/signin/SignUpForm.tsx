@@ -60,7 +60,7 @@ const SignUpForm = () => {
         <Card>
           <Flex p="3" gap="6" direction="column">
             <Heading size="8" align="center">
-              SignUp
+              Sign Up
             </Heading>
 
             <Box>
@@ -158,13 +158,6 @@ const SignUpForm = () => {
               {isSubmitting && <LoadingSpinner />}
               Continue
             </Button>
-
-            <Text align="center">
-              Already have an account ?{" "}
-              <Text color="blue" className="!cursor-pointer" as="span">
-                Login
-              </Text>
-            </Text>
           </Flex>
         </Card>
       </form>
