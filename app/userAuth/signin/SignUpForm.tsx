@@ -1,13 +1,8 @@
 "use client";
 
 import CalloutAlert from "@/app/invoice/components/Callout";
-import Link from "@/app/invoice/components/Link";
 import LoadingSpinner from "@/app/invoice/components/LoadingSpinner";
-import {
-  signUpSchema,
-  SignUpUserType,
-  UserType,
-} from "@/app/userValidationSchema";
+import { signUpSchema, SignUpUserType } from "@/app/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -16,10 +11,9 @@ import {
   Flex,
   Heading,
   IconButton,
-  Text,
   TextField,
 } from "@radix-ui/themes";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -45,7 +39,7 @@ const SignUpForm = () => {
 
   const submitHandler = handleSubmit(({ confirmPassword, email, password }) =>
     axios
-      .post<SignUpUserType>("/api/user/signup", {
+      .post<SignUpUserType>("/api/user/", {
         confirmPassword,
         email,
         password,
