@@ -18,9 +18,10 @@ const SegmentedAuthentication = () => {
     <Flex justify="center">
       <Box width="50%">
         <Flex direction="column" gap="5">
-          <SegmentedControl.Root size="3">
+          <SegmentedControl.Root size="3" defaultValue="signIn">
             {authenticateSegments.map((segment) => (
               <SegmentedControl.Item
+                className="!cursor-pointer"
                 key={segment.value}
                 value={segment.value}
                 onClick={() => setSegment(segment.value)}
