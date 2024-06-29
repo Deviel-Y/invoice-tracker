@@ -36,7 +36,8 @@ model Invoice {
 
 model User {
   id             String  @id @default(cuid())
-  Fullname       String?
+  name           String?
+  username       String?
   email          String? @unique
   hashedPassword String
   role           Role?   @default(USER)

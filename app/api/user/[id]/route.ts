@@ -39,7 +39,7 @@ export const PATCH = async (
   const updatedUser = await prisma.user.update({
     where: { id },
     data: {
-      Fullname: `${firstname} ${lastname}`,
+      name: `${firstname} ${lastname}`,
       hashedPassword: updatedPassword!,
       role,
       email,

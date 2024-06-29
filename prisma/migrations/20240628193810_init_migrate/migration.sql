@@ -27,7 +27,8 @@ CREATE TABLE `Invoice` (
 -- CreateTable
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
-    `Fullname` VARCHAR(191) NULL,
+    `name` VARCHAR(191) NULL,
+    `username` VARCHAR(191) NULL,
     `email` VARCHAR(191) NULL,
     `hashedPassword` VARCHAR(191) NOT NULL,
     `role` ENUM('ADMIN', 'USER') NULL DEFAULT 'USER',
