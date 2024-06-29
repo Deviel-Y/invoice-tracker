@@ -11,7 +11,7 @@ import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
-import CalloutAlert from "./Callout";
+import CalloutAlert from "./CalloutAlert";
 import { Invoice } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

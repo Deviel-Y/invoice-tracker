@@ -5,7 +5,7 @@ import useProductStore from "@/app/store";
 import { addProductSchema, ProductType } from "@/app/invoiceValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
-import CalloutAlert from "./Callout";
+import CalloutAlert from "./CalloutAlert";
 import toast from "react-hot-toast";
 
 const ProductForm = () => {

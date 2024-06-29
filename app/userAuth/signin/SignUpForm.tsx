@@ -1,6 +1,6 @@
 "use client";
 
-import CalloutAlert from "@/app/invoice/components/Callout";
+import CalloutAlert from "@/app/invoice/components/CalloutAlert";
 import LoadingSpinner from "@/app/invoice/components/LoadingSpinner";
 import { signUpSchema, SignUpUserType } from "@/app/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";

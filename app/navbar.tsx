@@ -65,6 +65,7 @@ export default Navbar;
 
 const UserInfo = () => {
   const { data: session } = useSession();
+  console.log(session?.user);
 
   return (
     <Popover.Root>
@@ -85,6 +86,7 @@ const UserInfo = () => {
           />
           <Box>
             <Flex direction="column" gap="2" align="center">
+              <Text color="gray">{session?.user?.name}</Text>
               <Text color="gray">{session?.user?.email}</Text>
               <SignOutConfirmation />
             </Flex>
