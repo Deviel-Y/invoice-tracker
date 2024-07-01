@@ -3,6 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@/prisma/client";
 
+export const GET = async (request: NextRequest) => {
+  const users = await prisma.user.findMany();
+
+  return NextResponse.json(users);
+};
+
 export const POST = async (req: NextRequest) => {
   const body: SignUpUserType = await req.json();
   const { confirmPassword, email, password } = body;
