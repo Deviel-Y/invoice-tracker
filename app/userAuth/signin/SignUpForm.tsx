@@ -51,8 +51,6 @@ const SignUpForm = () => {
         signIn("credentials", {
           email,
           password,
-          redirect: true,
-          callbackUrl: "/",
         })
       )
       .catch((res) => toast.error(res.response?.data))
