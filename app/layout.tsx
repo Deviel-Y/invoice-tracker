@@ -5,6 +5,7 @@ import "./globals.css";
 import { Container, Theme } from "@radix-ui/themes";
 import Navbar from "./Navbar";
 import AuthProvider from "./AuthProvider";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,14 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <Theme appearance="dark">
-            <Container>
-              <Navbar />
-              <main>{children}</main>
-            </Container>
-          </Theme>
-        </AuthProvider>
+        <ReactQueryProvider>
+          <AuthProvider>
+            <Theme appearance="dark">
+              <Container>
+                <Navbar />
+                <main>{children}</main>
+              </Container>
+            </Theme>
+          </AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
