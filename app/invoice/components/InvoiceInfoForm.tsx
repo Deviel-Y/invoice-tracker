@@ -5,7 +5,7 @@ import {
   invoiceInfoSchema,
   InvoiceInfoType,
   ProductType,
-} from "@/app/invoiceValidationSchemas";
+} from "@/app/schemas/invoiceValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";

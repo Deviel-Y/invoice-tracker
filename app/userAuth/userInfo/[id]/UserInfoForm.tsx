@@ -4,7 +4,7 @@ import CalloutAlert from "@/app/invoice/components/CalloutAlert";
 import {
   updateUserInfoSchema,
   updateUserInfoType,
-} from "@/app/userValidationSchema";
+} from "@/app/schemas/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import {

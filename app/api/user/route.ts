@@ -1,4 +1,7 @@
-import { signUpSchema, SignUpUserType } from "@/app/userValidationSchema";
+import {
+  signUpSchema,
+  SignUpUserType,
+} from "@/app/schemas/userValidationSchema";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@/prisma/client";

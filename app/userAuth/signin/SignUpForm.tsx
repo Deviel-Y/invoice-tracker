@@ -2,7 +2,10 @@
 
 import CalloutAlert from "@/app/invoice/components/CalloutAlert";
 import LoadingSpinner from "@/app/invoice/components/LoadingSpinner";
-import { signUpSchema, SignUpUserType } from "@/app/userValidationSchema";
+import {
+  signUpSchema,
+  SignUpUserType,
+} from "@/app/schemas/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,

@@ -1,7 +1,7 @@
 import {
   updateUserInfoSchema,
   updateUserInfoType,
-} from "@/app/userValidationSchema";
+} from "@/app/schemas/userValidationSchema";
 import prisma from "@/prisma/client";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";

@@ -2,7 +2,7 @@
 
 import formatNumber from "@/app/formatNumber";
 import useProductStore from "@/app/store";
-import { ProductType } from "@/app/invoiceValidationSchemas";
+import { ProductType } from "@/app/schemas/invoiceValidationSchemas";
 import { Invoice, Product } from "@prisma/client";
 import { Button, Table } from "@radix-ui/themes";
 import { useEffect } from "react";
@@ -54,7 +54,7 @@ const ProductListTable = ({
 
       addproductInArray(newProduct!);
     }
-  }, [addproductInArray, productList]);
+  }, [addproductInArray, productList, resetProducts]);
 
   const totalPriceSum = products.reduce(
     (acc, sum) => acc + sum.productTotalPrice,

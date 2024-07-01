@@ -1,7 +1,7 @@
 "use client";
 
 import CalloutAlert from "@/app/invoice/components/CalloutAlert";
-import { userSchema, UserType } from "@/app/userValidationSchema";
+import { userSchema, UserType } from "@/app/schemas/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
