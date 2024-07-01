@@ -40,8 +40,6 @@ const LogInForm = () => {
         signIn("credentials", {
           email: data.email,
           password: data.password,
-          redirect: true,
-          callbackUrl: "/",
         });
       })}
     >
