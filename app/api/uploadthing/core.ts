@@ -1,12 +1,15 @@
+import { getServerSession } from "next-auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
+import AuthOption from "../auth/AuthOptions";
+import prisma from "@/prisma/client";
 
 const f = createUploadthing();
 
-const auth = (req: Request) => ({ id: "fakeId" }); // Fake auth function
+const auth = (req: Request) => ({ id: "userId" }); // Fake auth function
 
 export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: "4MB" } })
+  imageUploader: f({ image: { maxFileSize: "2MB" } })
     .middleware(async ({ req }) => {
       const user = await auth(req);
 
