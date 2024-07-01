@@ -57,7 +57,7 @@ const Navbar = () => {
         )}
         {status === "authenticated" && (
           <Text>
-            Hi <UserInfo user={user} />
+            Welcome <UserInfo user={user} />
           </Text>
         )}
       </Flex>
@@ -80,21 +80,24 @@ const UserInfo = ({ user }: UserInfoProps) => {
     <Popover.Root>
       <Popover.Trigger>
         <Text color="indigo" className="cursor-pointer">
-          {session?.user?.name || "User"}
+          {session?.user?.name?.split(" ")[0] || "User"}
         </Text>
       </Popover.Trigger>
 
       <Popover.Content>
-        <Flex gap="4" align="center">
+        <Flex gap="4" align="start">
           <Avatar
-            size="4"
+            size="5"
             src={session?.user?.image!}
             alt="Profile Picture"
             fallback="?"
             radius="full"
           />
           <Box>
-            <Flex direction="column" gap="2" align="center">
+            <Flex direction="column" gap="2">
+              <Text align="center" size="4" weight="bold">
+                {session?.user?.name}
+              </Text>
               <Text color="gray">{session?.user?.email}</Text>
               <Button
                 onClick={() => router.push(`/userAuth/userInfo/${user?.id}`)}

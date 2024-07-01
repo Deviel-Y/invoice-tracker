@@ -25,14 +25,29 @@ export const signUpSchema = z
   });
 
 export const updateUserInfoSchema = z.object({
-  firstname: z.string().max(50),
-  lastname: z.string().max(50),
+  firstname: z
+    .string()
+    .min(1, { message: "Firstname is required" })
+    .max(50)
+    .refine((value) => !/\s/.test(value), {
+      message: "firstname must not contain space",
+    }),
+  lastname: z
+    .string()
+    .min(1, { message: "Lastname is required" })
+    .max(50)
+    .refine((value) => !/\s/.test(value), {
+      message: "Lastname must not contain space",
+    }),
   email: z.string().email().min(6).max(30).optional(),
   role: z.enum(["USER", "ADMIN"]).optional(),
   currentPassword: z
     .string()
-    .min(1, "Password is required")
+    .min(5, "Password must contain at least 5 characters")
     .max(100)
     .optional(),
-  newPassword: z.string().optional(),
+  newPassword: z
+    .string()
+    .min(5, "Password must contain at least 5 characters")
+    .optional(),
 });

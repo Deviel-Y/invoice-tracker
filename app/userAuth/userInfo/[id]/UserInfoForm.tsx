@@ -1,6 +1,7 @@
 "use client";
 
 import CalloutAlert from "@/app/invoice/components/CalloutAlert";
+import LoadingSpinner from "@/app/invoice/components/LoadingSpinner";
 import {
   updateUserInfoSchema,
   updateUserInfoType,
@@ -29,7 +30,11 @@ interface Props {
 }
 
 const UserInfoForm = ({ user }: Props) => {
+  const [isPasswordFieldActive, setPasswordFieldActive] =
+    useState<boolean>(false);
+
   const { data: session, update } = useSession();
+
   const {
     register,
     handleSubmit,
@@ -38,10 +43,10 @@ const UserInfoForm = ({ user }: Props) => {
     resolver: zodResolver(updateUserInfoSchema),
   });
 
-  const [isPasswordFieldActive, setPasswordFieldActive] =
-    useState<boolean>(false);
-
   const router = useRouter();
+
+  const userFirstname = session?.user?.name?.split(" ")[0];
+  const userLastname = session?.user?.name?.split(" ")[1];
 
   const submitHandler = handleSubmit((data) => {
     axios
@@ -72,6 +77,7 @@ const UserInfoForm = ({ user }: Props) => {
           <Box>
             <TextField.Root
               {...register("firstname")}
+              defaultValue={userFirstname}
               size="3"
               className="!transition-all"
               type="text"
@@ -85,6 +91,7 @@ const UserInfoForm = ({ user }: Props) => {
           <Box>
             <TextField.Root
               {...register("lastname")}
+              defaultValue={userLastname}
               size="3"
               className="!transition-all"
               type="text"
@@ -129,8 +136,12 @@ const UserInfoForm = ({ user }: Props) => {
           </Box>
 
           <Flex gap="5" align="center">
-            <Button className="!transition-all !cursor-pointer" size="3">
-              Update
+            <Button
+              disabled={isSubmitting}
+              className="!transition-all !cursor-pointer"
+              size="3"
+            >
+              {isSubmitting && <LoadingSpinner />} Update
             </Button>
             <Button
               className="!transition-all !cursor-pointer"
