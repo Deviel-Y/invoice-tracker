@@ -37,37 +37,33 @@ const UserInfoForm = ({ user }: Props) => {
   } = useForm<updateUserInfoType>({
     resolver: zodResolver(updateUserInfoSchema),
   });
-  const firstname = session?.user?.name?.split(" ")[0];
-  const lastname = session?.user?.name?.split(" ")[1];
 
   const [isPasswordFieldActive, setPasswordFieldActive] =
     useState<boolean>(false);
 
   const router = useRouter();
 
-  const submittionHandle = () => {
-    handleSubmit((data) => {
-      axios
-        .patch(`/api/user/${user.id}`, data)
-        .then(async () => {
-          await update({
-            ...session,
-            user: {
-              ...session?.user,
-              name: `${data.firstname} ${data.lastname}`,
-            },
-          });
-        })
-        .then(() => {
-          router.refresh();
-          router.push("/");
-        })
-        .catch((res) => toast.error(res.response?.data));
-    });
-  };
+  const submitHandler = handleSubmit((data) => {
+    axios
+      .patch(`/api/user/${user.id}`, data)
+      .then(async () => {
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            name: `${data.firstname} ${data.lastname}`,
+          },
+        });
+      })
+      .then(() => {
+        router.push("/");
+        router.refresh();
+      })
+      .catch((res) => toast.error(res.response?.data));
+  });
 
   return (
-    <form onSubmit={submittionHandle}>
+    <form onSubmit={submitHandler}>
       <Card>
         <Heading mb="8" size="7" as="h1">
           User Info
@@ -75,7 +71,6 @@ const UserInfoForm = ({ user }: Props) => {
         <Flex direction="column" gap="5">
           <Box>
             <TextField.Root
-              defaultValue={firstname}
               {...register("firstname")}
               size="3"
               className="!transition-all"
@@ -89,7 +84,6 @@ const UserInfoForm = ({ user }: Props) => {
 
           <Box>
             <TextField.Root
-              defaultValue={lastname}
               {...register("lastname")}
               size="3"
               className="!transition-all"

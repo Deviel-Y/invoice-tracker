@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "@prisma/client";
 import {
   AlertDialog,
   Avatar,
@@ -14,10 +15,13 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { TfiAgenda } from "react-icons/tfi";
+import useUsers from "./hooks/useUsers";
 
 const Navbar = () => {
   const currentPath = usePathname();
-  const { status } = useSession();
+  const { status, data: session } = useSession();
+  const { data: users } = useUsers();
+  const user = users?.find((user) => user.email === session?.user?.email);
 
   const navLinks: { label: string; href: string }[] = [
     { label: "Dasboard", href: "/" },
@@ -53,7 +57,7 @@ const Navbar = () => {
         )}
         {status === "authenticated" && (
           <Text>
-            Hi <UserInfo />
+            Hi <UserInfo user={user} />
           </Text>
         )}
       </Flex>
@@ -63,9 +67,14 @@ const Navbar = () => {
 
 export default Navbar;
 
-const UserInfo = () => {
+interface UserInfoProps {
+  user?: User;
+}
+
+const UserInfo = ({ user }: UserInfoProps) => {
   const { data: session } = useSession();
-  console.log(session?.user);
+
+  const router = useRouter();
 
   return (
     <Popover.Root>
@@ -86,8 +95,13 @@ const UserInfo = () => {
           />
           <Box>
             <Flex direction="column" gap="2" align="center">
-              <Text color="gray">{session?.user?.name}</Text>
               <Text color="gray">{session?.user?.email}</Text>
+              <Button
+                onClick={() => router.push(`/userAuth/userInfo/${user?.id}`)}
+                className="!transition-all !cursor-pointer"
+              >
+                User Info
+              </Button>
               <SignOutConfirmation />
             </Flex>
           </Box>
