@@ -18,6 +18,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const UserInfoForm = ({ user }: Props) => {
+  const { data: session, update } = useSession();
   const {
     register,
     handleSubmit,
@@ -35,21 +37,37 @@ const UserInfoForm = ({ user }: Props) => {
   } = useForm<updateUserInfoType>({
     resolver: zodResolver(updateUserInfoSchema),
   });
+  const firstname = session?.user?.name?.split(" ")[0];
+  const lastname = session?.user?.name?.split(" ")[1];
 
   const [isPasswordFieldActive, setPasswordFieldActive] =
     useState<boolean>(false);
 
   const router = useRouter();
 
+  const submittionHandle = () => {
+    handleSubmit((data) => {
+      axios
+        .patch(`/api/user/${user.id}`, data)
+        .then(async () => {
+          await update({
+            ...session,
+            user: {
+              ...session?.user,
+              name: `${data.firstname} ${data.lastname}`,
+            },
+          });
+        })
+        .then(() => {
+          router.refresh();
+          router.push("/");
+        })
+        .catch((res) => toast.error(res.response?.data));
+    });
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        axios
-          .patch(`/api/user/${user.id}`, data)
-          .catch((res) => toast.error(res.response?.data))
-          .finally(() => router.push("/"));
-      })}
-    >
+    <form onSubmit={submittionHandle}>
       <Card>
         <Heading mb="8" size="7" as="h1">
           User Info
@@ -57,6 +75,7 @@ const UserInfoForm = ({ user }: Props) => {
         <Flex direction="column" gap="5">
           <Box>
             <TextField.Root
+              defaultValue={firstname}
               {...register("firstname")}
               size="3"
               className="!transition-all"
@@ -70,6 +89,7 @@ const UserInfoForm = ({ user }: Props) => {
 
           <Box>
             <TextField.Root
+              defaultValue={lastname}
               {...register("lastname")}
               size="3"
               className="!transition-all"

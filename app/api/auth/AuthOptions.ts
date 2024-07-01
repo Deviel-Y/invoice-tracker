@@ -10,10 +10,17 @@ const AuthOption: NextAuthOptions = {
   },
 
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      url.startsWith("/") ? `${url}` : `${baseUrl}`;
+    async jwt({ token, user, session, trigger }) {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      }
 
-      return baseUrl;
+      return { ...user, ...token };
+    },
+
+    async session({ session, token }) {
+      session.user = token as any;
+      return session;
     },
   },
 

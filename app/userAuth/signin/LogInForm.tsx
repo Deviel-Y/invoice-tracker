@@ -37,7 +37,12 @@ const LogInForm = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        signIn("credentials", { email: data.email, password: data.password });
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: true,
+          callbackUrl: "/",
+        });
       })}
     >
       <Card>
