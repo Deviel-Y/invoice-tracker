@@ -15,8 +15,15 @@ export const PATCH = async (
   { params: { id } }: Props
 ) => {
   const body: updateUserInfoType = await request.json();
-  const { currentPassword, newPassword, firstname, lastname, role, email } =
-    body;
+  const {
+    currentPassword,
+    newPassword,
+    firstname,
+    lastname,
+    role,
+    email,
+    image,
+  } = body;
 
   const validation = updateUserInfoSchema.safeParse(body);
   if (!validation.success)
@@ -43,6 +50,7 @@ export const PATCH = async (
       hashedPassword: updatedPassword!,
       role,
       email,
+      image,
     },
   });
   return NextResponse.json(updatedUser.email);

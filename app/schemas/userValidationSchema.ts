@@ -29,14 +29,16 @@ export const updateUserInfoSchema = z.object({
     .string()
     .min(1, { message: "Firstname is required" })
     .max(50)
-    .refine((value) => !/\s/.test(value), {
+    .optional()
+    .refine((value) => !/\s/.test(value!), {
       message: "firstname must not contain space",
     }),
   lastname: z
     .string()
     .min(1, { message: "Lastname is required" })
     .max(50)
-    .refine((value) => !/\s/.test(value), {
+    .optional()
+    .refine((value) => !/\s/.test(value!), {
       message: "Lastname must not contain space",
     }),
   email: z.string().email().min(6).max(30).optional(),
@@ -50,4 +52,5 @@ export const updateUserInfoSchema = z.object({
     .string()
     .min(5, "Password must contain at least 5 characters")
     .optional(),
+  image: z.string().optional().nullable(),
 });

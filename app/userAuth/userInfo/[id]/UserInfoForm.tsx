@@ -2,6 +2,7 @@
 
 import CalloutAlert from "@/app/invoice/components/CalloutAlert";
 import LoadingSpinner from "@/app/invoice/components/LoadingSpinner";
+import ImageUploadButton from "@/app/invoice/components/UploadButton";
 import {
   updateUserInfoSchema,
   updateUserInfoType,
@@ -20,6 +21,7 @@ import {
 } from "@radix-ui/themes";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -74,6 +76,7 @@ const UserInfoForm = ({ user }: Props) => {
           User Info
         </Heading>
         <Flex direction="column" gap="5">
+          <ImageUploadButton user={user} />
           <Box>
             <TextField.Root
               {...register("firstname")}
@@ -87,7 +90,6 @@ const UserInfoForm = ({ user }: Props) => {
               <CalloutAlert>{errors.firstname.message}</CalloutAlert>
             )}
           </Box>
-
           <Box>
             <TextField.Root
               {...register("lastname")}
