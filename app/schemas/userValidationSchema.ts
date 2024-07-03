@@ -27,17 +27,19 @@ export const signUpSchema = z
 export const updateUserInfoSchema = z.object({
   firstname: z
     .string()
-    .min(1, { message: "Firstname is required" })
+    .min(3, { message: "Firstname must be at least 3 characters long" })
     .max(50)
     .optional()
+    .or(z.literal(""))
     .refine((value) => !/\s/.test(value!), {
       message: "firstname must not contain space",
     }),
   lastname: z
     .string()
-    .min(1, { message: "Lastname is required" })
+    .min(3, { message: "Lastname must be at least 3 characters long" })
     .max(50)
     .optional()
+    .or(z.literal(""))
     .refine((value) => !/\s/.test(value!), {
       message: "Lastname must not contain space",
     }),
