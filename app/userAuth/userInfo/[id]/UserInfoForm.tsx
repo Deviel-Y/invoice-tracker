@@ -5,7 +5,7 @@ import LoadingSpinner from "@/app/invoice/components/LoadingSpinner";
 import ImageUploadButton from "@/app/invoice/components/UploadButton";
 import {
   updateUserInfoSchema,
-  updateUserInfoType,
+  UpdateUserInfoType,
 } from "@/app/schemas/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
@@ -41,7 +41,7 @@ const UserInfoForm = ({ user }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<updateUserInfoType>({
+  } = useForm<UpdateUserInfoType>({
     resolver: zodResolver(updateUserInfoSchema),
   });
 

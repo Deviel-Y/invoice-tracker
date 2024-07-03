@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { nullable, z } from "zod";
 
 export type UserType = z.infer<typeof userSchema>;
 export type SignUpUserType = z.infer<typeof signUpSchema>;
-export type updateUserInfoType = z.infer<typeof updateUserInfoSchema>;
+export type UpdateUserInfoType = z.infer<typeof updateUserInfoSchema>;
 
 export const userSchema = z.object({
   email: z
@@ -47,10 +47,13 @@ export const updateUserInfoSchema = z.object({
     .string()
     .min(5, "Password must contain at least 5 characters")
     .max(100)
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   newPassword: z
     .string()
     .min(5, "Password must contain at least 5 characters")
-    .optional(),
+    .max(100)
+    .optional()
+    .or(z.literal("")),
   image: z.string().optional().nullable(),
 });

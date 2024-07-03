@@ -1,6 +1,6 @@
 import {
   updateUserInfoSchema,
-  updateUserInfoType,
+  UpdateUserInfoType,
 } from "@/app/schemas/userValidationSchema";
 import prisma from "@/prisma/client";
 import bcrypt from "bcrypt";
@@ -14,7 +14,7 @@ export const PATCH = async (
   request: NextRequest,
   { params: { id } }: Props
 ) => {
-  const body: updateUserInfoType = await request.json();
+  const body: UpdateUserInfoType = await request.json();
   const {
     currentPassword,
     newPassword,
