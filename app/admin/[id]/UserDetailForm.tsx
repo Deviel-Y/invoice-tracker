@@ -6,7 +6,7 @@ import {
   UpdateUserInfoType,
 } from "@/app/schemas/userValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 import {
   Box,
   Button,
@@ -14,17 +14,26 @@ import {
   Checkbox,
   Flex,
   Heading,
+  Select,
   Text,
   TextField,
 } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { array } from "zod";
 
 interface Props {
   user: User;
 }
 
 const UserDetailForm = ({ user }: Props) => {
+  const userRoles: { label: string; value: Role }[] = [
+    { label: "Admin", value: "ADMIN" },
+    { label: "User", value: "USER" },
+  ];
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,7 +41,7 @@ const UserDetailForm = ({ user }: Props) => {
   } = useForm<UpdateUserInfoType>({
     resolver: zodResolver(updateUserInfoSchema),
   });
-  const [isUserAdmin, setUserAdmin] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<string>();
   const [isPasswordFormDisable, setPasswordFormStatus] =
     useState<boolean>(false);
 
@@ -44,12 +53,16 @@ const UserDetailForm = ({ user }: Props) => {
 
       <form
         onSubmit={handleSubmit((data) => {
-          console.log({ ...data, role: isUserAdmin });
+          const userProfileInfo = { ...data, role: userRole };
+          axios.patch(`/api/user/${user.id}`, userProfileInfo).then(() => {
+            router.push("/admin");
+            router.refresh();
+          });
         })}
       >
         <Flex direction="column" gap="5">
           <Flex gap="4" align="center">
-            <Box>
+            <Flex direction="column" gap="1" flexGrow="1">
               <Text as="label" size="3">
                 First Name
               </Text>
@@ -64,9 +77,9 @@ const UserDetailForm = ({ user }: Props) => {
               {errors.firstname && (
                 <CalloutAlert>{errors.firstname.message}</CalloutAlert>
               )}
-            </Box>
+            </Flex>
 
-            <Box>
+            <Flex direction="column" gap="1" flexGrow="1">
               <Text as="label" size="3">
                 Last Name
               </Text>
@@ -80,22 +93,32 @@ const UserDetailForm = ({ user }: Props) => {
               {errors.lastname && (
                 <CalloutAlert>{errors.lastname.message}</CalloutAlert>
               )}
-            </Box>
+            </Flex>
 
-            <Text ml="5" as="label" size="3">
-              <Flex align="end" gap="2">
-                <Checkbox
-                  checked={user.role === "ADMIN"}
-                  onCheckedChange={(event) => {
-                    setUserAdmin(!!event);
-                  }}
-                />
-                Set As Admin
-              </Flex>
-            </Text>
+            <Flex direction="column" gap="1">
+              <Text as="p" size="3">
+                User&apos; Accessability
+              </Text>
+              <Select.Root
+                size="3"
+                defaultValue={user.role!}
+                onValueChange={(value) => setUserRole(value)}
+              >
+                <Select.Trigger />
+                <Select.Content>
+                  <Select.Group>
+                    {userRoles.map((userRole) => (
+                      <Select.Item key={userRole.value} value={userRole.value}>
+                        {userRole.label}
+                      </Select.Item>
+                    ))}
+                  </Select.Group>
+                </Select.Content>
+              </Select.Root>
+            </Flex>
           </Flex>
 
-          <Box>
+          <Flex direction="column" gap="1">
             <Text as="label" size="3">
               Email Address
             </Text>
@@ -111,17 +134,17 @@ const UserDetailForm = ({ user }: Props) => {
             {errors.email && (
               <CalloutAlert>{errors.email.message}</CalloutAlert>
             )}
-          </Box>
+          </Flex>
 
-          <Flex>
-            <Box>
+          <Flex align="center">
+            <Flex direction="column" gap="1" flexGrow="1">
               <Text as="label" size="3">
                 Password
               </Text>
 
               <TextField.Root
                 {...register("newPassword")}
-                disabled={isPasswordFormDisable}
+                disabled={!isPasswordFormDisable}
                 className="!transition-all"
                 placeholder="User's Password"
                 size="3"
@@ -130,21 +153,21 @@ const UserDetailForm = ({ user }: Props) => {
               {errors.newPassword && (
                 <CalloutAlert>{errors.newPassword.message}</CalloutAlert>
               )}
-            </Box>
+            </Flex>
 
             <Text ml="5" as="label" size="3">
-              <Flex align="end" gap="2">
+              <Flex mt="5" align="end" gap="2">
                 <Checkbox
                   onCheckedChange={(event) => {
                     setPasswordFormStatus(!!event);
                   }}
                 />
-                Set As Admin
+                Change User&apos;s Password
               </Flex>
             </Text>
           </Flex>
 
-          <Flex gap="4">
+          <Flex gap="5" mt="4">
             <Button
               type="submit"
               className="!transition-all !cursor-pointer"
