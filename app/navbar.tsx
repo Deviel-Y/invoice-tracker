@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
   Popover,
   Text,
 } from "@radix-ui/themes";
@@ -85,9 +86,9 @@ const UserInfo = ({ user }: UserInfoProps) => {
       </Popover.Trigger>
 
       <Popover.Content>
-        <Flex gap="4" align="start">
+        <Grid columns={"130px 1fr"} align="center" justify="center">
           <Avatar
-            size="5"
+            size="7"
             src={session?.user?.image!}
             alt="Profile Picture"
             fallback="?"
@@ -108,7 +109,7 @@ const UserInfo = ({ user }: UserInfoProps) => {
               <SignOutConfirmation />
             </Flex>
           </Box>
-        </Flex>
+        </Grid>
       </Popover.Content>
     </Popover.Root>
   );
