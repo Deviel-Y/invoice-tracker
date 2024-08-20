@@ -1,8 +1,9 @@
-import { nullable, z } from "zod";
+import { z } from "zod";
 
 export type UserType = z.infer<typeof userSchema>;
 export type SignUpUserType = z.infer<typeof signUpSchema>;
 export type UpdateUserInfoType = z.infer<typeof updateUserInfoSchema>;
+export type ForgetPasswordSchema = z.infer<typeof forgetPasswordSchema>;
 
 export const userSchema = z.object({
   email: z
@@ -20,6 +21,17 @@ export const signUpSchema = z
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+export const forgetPasswordSchema = z
+  .object({
+    email: z.string().min(6).max(30).email(),
+    newPassword: z.string().min(1, "Password is required").max(100).optional(),
+    confirmPassword: z.string().optional(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
