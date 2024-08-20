@@ -1,9 +1,8 @@
-import { Flex, Grid } from "@radix-ui/themes";
-import InvoiceList, { columnNames } from "./InvoiceList";
-import CreateNewInvoiceButton from "./CreateNewInvoiceButton";
 import prisma from "@/prisma/client";
 import { Invoice } from "@prisma/client";
+import { Grid } from "@radix-ui/themes";
 import ActionSection from "./ActionSection";
+import InvoiceList, { columnNames } from "./InvoiceList";
 
 interface Props {
   searchParams: { orderByFilter: keyof Invoice; search: string };
@@ -21,11 +20,13 @@ const InvoiceListPage = async ({
     orderBy,
   });
 
+  const invoiceCount = await prisma.invoice.count();
+
   if (!invoices) return null;
 
   return (
     <Grid columns="1" gap="3">
-      <ActionSection />
+      <ActionSection invoiceCount={invoiceCount} />
       <InvoiceList
         searchParams={{ search, orderByFilter }}
         invoices={invoices}

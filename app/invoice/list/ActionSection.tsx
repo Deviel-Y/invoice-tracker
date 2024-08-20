@@ -4,11 +4,15 @@ import { Flex } from "@radix-ui/themes";
 import CreateNewInvoiceButton from "./CreateNewInvoiceButton";
 import SearchInput from "./SearchInput";
 
-const ActionSection = () => {
+interface Props {
+  invoiceCount: number;
+}
+
+const ActionSection = ({ invoiceCount }: Props) => {
   return (
     <Flex gap="5">
       <CreateNewInvoiceButton />
-      <SearchInput />
+      {invoiceCount !== 0 && <SearchInput />}
     </Flex>
   );
 };
