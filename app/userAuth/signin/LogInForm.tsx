@@ -10,7 +10,6 @@ import {
   Flex,
   Heading,
   IconButton,
-  Text,
   TextField,
 } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
@@ -22,6 +21,7 @@ import {
   AiOutlineKey,
   AiOutlineUser,
 } from "react-icons/ai";
+import ChangePassword from "../components/ChangePassword";
 
 const LogInForm = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -100,7 +100,8 @@ const LogInForm = () => {
                 <CalloutAlert>{errors.password.message}</CalloutAlert>
               )}
             </Box>
-            <Text align="right">Forgot your password ?</Text>
+            <ChangePassword triggerText="Forgot your password ?" />
+            {/* <Text align="right">Forgot your password ?</Text> */}
           </Flex>
 
           <Button
