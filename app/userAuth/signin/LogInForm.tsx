@@ -101,7 +101,6 @@ const LogInForm = () => {
               )}
             </Box>
             <ChangePassword triggerText="Forgot your password ?" />
-            {/* <Text align="right">Forgot your password ?</Text> */}
           </Flex>
 
           <Button

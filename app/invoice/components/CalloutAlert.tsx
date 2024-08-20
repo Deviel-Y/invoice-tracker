@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 
 const CalloutAlert = ({ children }: PropsWithChildren) => {
   return (
-    <Callout.Root mt="2" size="1" color="red" role="alert">
+    <Callout.Root my="2" size="1" color="red" role="alert">
       <Callout.Icon>
         <ExclamationTriangleIcon />
       </Callout.Icon>

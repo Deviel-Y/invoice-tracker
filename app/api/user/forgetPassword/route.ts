@@ -1,13 +1,13 @@
 import {
   forgetPasswordSchema,
-  ForgetPasswordSchema,
+  ForgetPasswordSchemaType,
 } from "@/app/schemas/userValidationSchema";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
   try {
-    const body: ForgetPasswordSchema = await request.json();
+    const body: ForgetPasswordSchemaType = await request.json();
     const { email } = body;
 
     const validation = forgetPasswordSchema.safeParse(body);
